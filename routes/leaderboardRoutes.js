@@ -1,8 +1,11 @@
+const cors = require('cors')
 const mongoose = require('mongoose');
 const Score = mongoose.model('scores');
 const getFilteredScores = require('../helperFunctions/getFilteredScores');
 
 module.exports = (app) => {
+
+    app.use(cors());
 
     app.get('/api/scores/:difficulty', async (req, res) => {
         try {
