@@ -1,13 +1,21 @@
+const keys = require('./config/keys');
 const express = require('express');
+const mongoose = require('mongoose');
+require('./models/Score');
+
+mongoose.connect(keys.mongoURI, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+});
+
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 
-app.get('/', (req, res) => {
-    res.send({ 42: 'The meaning of life, the universe, and everything.'});
-});
-
-app.get('/hello', (req, res) => {
-    res.send({ hello: 'friend'});
-});
+require('./routes/leaderboardRoutes.js')(app);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
