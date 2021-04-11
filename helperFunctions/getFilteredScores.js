@@ -8,5 +8,5 @@ module.exports = async (limit, gameDifficulty) => {
             $lt: new Date(),
             $gte: getDateLimit(limit)
         }
-    }).sort({ gameCompletionTime: 'ascending', gameCompletionDate: 'ascending' }).limit(10);
+    }).sort({ gameCompletionTime: 'ascending', gameCompletionDate: 'ascending' }).limit(15);
 };
