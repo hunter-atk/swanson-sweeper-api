@@ -3,10 +3,14 @@ const getDateLimit = require('./getDateLimit');
 const Score = mongoose.model('scores');
 
 module.exports = async (limit, gameDifficulty) => {
-    return await Score.find({
+    const filter = (limit === 'allTime' ? {
+        gameDifficulty
+    } : {
         gameDifficulty, gameCompletionDate: {
             $lt: new Date(),
-            $gte: getDateLimit(limit)
+            $gte: limit ? getDateLimit(limit) : -Infinity
         }
-    }).sort({ gameCompletionTime: 'ascending', gameCompletionDate: 'ascending' }).limit(15);
+    })
+   
+    return await Score.find(filter).sort({ gameCompletionTime: 'ascending', gameCompletionDate: 'ascending' }).limit(15);
 };
